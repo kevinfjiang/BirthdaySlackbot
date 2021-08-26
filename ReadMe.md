@@ -49,9 +49,9 @@ The purpose of the project is that it is not intended to scale because then it w
 - [x] Enable the @ feature to @ the special bday people, and also if the credentials are wrong, use a filler name 
 - [x] Set up template for the slackbot (auth token and permissions) 
 - [ ] Enable Google sheets writes
-- [ ] Use terraform to set up the proper cloud resources
+- [x] Use terraform to set up DB
+- [ ] Use terraform to set up lambda/cloudwatchs
 - [ ] Set up Docker to make it easily reproduceable
-- [ ] Set up Lambda
 - [ ] Set up interactive slack messages
 - [ ] Set up DynamoDB for interactive messages
 </details>
