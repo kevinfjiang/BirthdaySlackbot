@@ -16,3 +16,7 @@ slackBirthdayBot
 # vendor/
 .DS_Store
 *secrets*
+.terraform*
+*.zip
+terraform.tfstate*
+save_MSG

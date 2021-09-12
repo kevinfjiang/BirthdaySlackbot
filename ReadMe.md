@@ -50,8 +50,8 @@ The purpose of the project is that it is not intended to scale because then it w
 - [x] Set up template for the slackbot (auth token and permissions) 
 - [ ] Enable Google sheets writes
 - [x] Use terraform to set up DB
-- [ ] Use terraform to set up lambda/cloudwatchs
-- [ ] Set up Docker to make it easily reproduceable
+- [x] Use terraform to set up lambdas
+- [ ] Set up Docker to make deployment easier
 - [ ] Set up interactive slack messages
 - [ ] Set up DynamoDB for interactive messages
 </details>
