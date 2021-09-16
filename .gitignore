@@ -20,3 +20,4 @@ slackBirthdayBot
 *.zip
 terraform.tfstate*
 save_MSG
+.*

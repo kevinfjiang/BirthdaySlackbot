@@ -65,7 +65,7 @@ func GetService(jsonPath string)(*sheets.Service){
 }
 
 
-func GetTable(jsonPath string, spreadsheetId string, readRange string) (*fibHeap.FibHeap) {
+func GetTable(jsonPath string, spreadsheetId string, readRange string, Client *slackMSG.SlackAPI) (*fibHeap.FibHeap) {
 	srv := GetService(jsonPath)
 	template := strings.Replace(readRange, ":", "%s:", 1) + "%s" //Format of a query for a column
 	
@@ -97,7 +97,7 @@ func GetTable(jsonPath string, spreadsheetId string, readRange string) (*fibHeap
 				wg.Add(1)
 				go func(){
 					defer wg.Done()
-					staffMap["SlackID"] = slackMSG.GetSlackID(staffMap["Email"].(string))
+					staffMap["SlackID"] = Client.GetSlackID(staffMap["Email"].(string))
 				}()
 			}
 			StaffTable.InsertValue(&Staff{staffMap})
