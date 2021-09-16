@@ -1,10 +1,8 @@
-
-
 provider "archive" {}
 
-data "archive_file" "zip" {
+data "archive_file" "sendMSGzip" {
   type        = "zip"
-  source_file = "MSGBot"
+  source_file = "MSGBot/MSGBot"
   output_path = "MSGBot.zip"
 }
 
@@ -28,8 +26,8 @@ resource "aws_iam_role" "iam_for_lambda" {
 }
 
 // Here creates function
-resource "aws_lambda_function" "lambda" {
-  function_name = "saveMSGlambda"
+resource "aws_lambda_function" "MSGBotlambda" {
+  function_name = "MSGBotlambda"
 
   filename         = "${data.archive_file.zip.output_path}"
   source_code_hash = "${data.archive_file.zip.output_base64sha256}"

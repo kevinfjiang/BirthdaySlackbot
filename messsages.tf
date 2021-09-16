@@ -1,34 +1,11 @@
 
-
-provider "archive" {}
-
-data "archive_file" "zip" {
+data "archive_file" "saveMSGzip" {
   type        = "zip"
   source_file = "save_MSG"
   output_path = "save_MSG.zip"
 }
-
-data "aws_iam_policy_document" "policy" {
-  statement {
-    sid    = ""
-    effect = "Allow"
-
-    principals {
-      identifiers = ["lambda.amazonaws.com"]
-      type        = "Service"
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
-
-resource "aws_iam_role" "iam_for_lambda" {
-  name               = "iam_for_lambda"
-  assume_role_policy = "${data.aws_iam_policy_document.policy.json}"
-}
-
 // Here creates function
-resource "aws_lambda_function" "lambda" {
+resource "aws_lambda_function" "saveMSGlambda" {
   function_name = "saveMSGlambda"
 
   filename         = "${data.archive_file.zip.output_path}"
