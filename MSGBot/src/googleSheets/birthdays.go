@@ -58,8 +58,8 @@ func Prep_BDAY_MSG(prebirthday []interface{}, birthday []interface{}, FB *fibHea
 	if len(prebirthday)>0{
 		prebirthdayNames := get_Bday_Names(Client, prebirthday) 
 
-		for _, stff := range(append(FB.GetIter(), birthday)){//slice of interface{}
-			Client.Send_BDAY_MSG(prebirthdayNames, stff.(*Staff).Val["SlackID"].(string), slackMSG.Get_pre_birthdayMSG)
+		for _, bday := range(append(FB.GetIter(), birthday)){ // []interface{}
+			Client.Send_BDAY_MSG(prebirthdayNames, bday.(*Staff).Val["SlackID"].(string), slackMSG.Get_pre_birthdayMSG)
 		}
 
 		if len(prebirthday) > 1{
@@ -75,5 +75,11 @@ func Prep_BDAY_MSG(prebirthday []interface{}, birthday []interface{}, FB *fibHea
 		channelID := Client.Get_BDAY_CHANNEL()
 		Client.Send_BDAY_MSG(birthdayNames, channelID, slackMSG.Get_birthdayMSG)
 
+	}
+}
+
+func Send_BDAY_Private_MSG(birthday []interface{}, DB interface{}, Client *slackMSG.SlackAPI){
+	for _, bday := range(birthday){	
+		Client.Get_Private_Message(bday.(*Staff).Val, DB)
 	}
 }
