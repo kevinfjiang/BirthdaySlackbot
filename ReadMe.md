@@ -51,6 +51,7 @@ The purpose of the project is that it is not intended to scale because then it w
 - [X] Enable Google sheets writes
 - [x] Use terraform to set up DB
 - [x] Use terraform to set up lambdas
+- [ ] Add logger support
 - [ ] Set up Docker to make deployment easier
 - [ ] Set up interactive slack messages
 - [ ] Set up DB Reads/Writes 
