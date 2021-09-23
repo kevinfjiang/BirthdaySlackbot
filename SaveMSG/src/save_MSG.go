@@ -1,5 +1,5 @@
 package main
-
+// TODO write a shema for the database (ON PAPER), set up cloud watch, and that's all
 import (
         // "fmt"
         // "context"

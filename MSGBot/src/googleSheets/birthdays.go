@@ -3,6 +3,8 @@ package googleSheets
 
 import(
 	"sync"
+	"log"
+
 	"github.com/kevinfjiang/slackBirthdayBot/src/fibonacci"
 	"github.com/kevinfjiang/slackBirthdayBot/src/slackMSG"
 )
@@ -22,7 +24,7 @@ func Find_BDAYS(FB *fibHeap.FibHeap) ([]interface{}, []interface{}){
 		staff, _ := FB.ExtractMin()
 		prebirthday = append(prebirthday, staff)
 	}
-
+	log.Println("BDAYS and PreBDAYS found")
 	return prebirthday, birthday
 }
 
@@ -51,6 +53,7 @@ func get_Bday_Names(Client *slackMSG.SlackAPI, staffList []interface{}) []interf
 	
 	return ret
 }
+
 func Prep_BDAY_MSG(prebirthday []interface{}, birthday []interface{}, FB *fibHeap.FibHeap, Client *slackMSG.SlackAPI) {
 	if len(prebirthday)>0{
 		prebirthdayNames := get_Bday_Names(Client, prebirthday) 

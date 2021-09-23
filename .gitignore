@@ -20,4 +20,4 @@ slackBirthdayBot
 *.zip
 terraform.tfstate*
 save_MSG
-.env
+my.env

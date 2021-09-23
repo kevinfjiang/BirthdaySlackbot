@@ -2,6 +2,8 @@ package slackMSG
 
 import (
 	"fmt"
+	"log"
+
 	"github.com/slack-go/slack"
 )
 
@@ -12,6 +14,7 @@ type SlackAPI struct{
 
 
 func New_SlackAPI (Token string) *SlackAPI{
+	// LOG EVENT
 	return &SlackAPI{
 		slack.New(Token),
 	}
@@ -35,7 +38,7 @@ func (SA *SlackAPI) Send_BDAY_MSG(birthdayPersons []interface{}, ID string, msgF
 }
 
 func (SA *SlackAPI) Get_BDAY_CHANNEL() string {
-
+	//LOG EVENTT
 	channelList, _, err  := SA.client.GetConversations(&slack.GetConversationsParameters{ExcludeArchived: true})
 	
 	if err == nil{
@@ -49,7 +52,7 @@ func (SA *SlackAPI) Get_BDAY_CHANNEL() string {
 	channel, err2 := SA.client.CreateConversation("birthday", false)
 	
 	if err2!=nil{
-		fmt.Println(err2)
+		// LOG EVENT
 		return ""
 	}
 
@@ -68,9 +71,11 @@ func (SA *SlackAPI) Send_MSG(str string, email string)(string, error){
 }
 
 func (SA *SlackAPI) GetSlackID(Email string) string {
+	// LOG SEARCH
 	userID, err := SA.client.GetUserByEmail(Email)
 	if err != nil{
-		return ""
+		// LOG EVENT
+		return "No ID Found"
 	}
 	return userID.ID
 }

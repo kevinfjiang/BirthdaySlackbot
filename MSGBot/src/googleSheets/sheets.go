@@ -1,14 +1,15 @@
 package googleSheets
 
 import (
-	"context"
 	"fmt"
 	"log"
-	"strings"
+
 	"time"
 	"math"
+	"strings"
 	"sync"
 
+	"context"
 	"github.com/kevinfjiang/slackBirthdayBot/src/slackMSG"
 	"github.com/kevinfjiang/slackBirthdayBot/src/fibonacci"
 
@@ -66,45 +67,65 @@ func GetService(jsonPath string)(*sheets.Service){
 
 
 func GetTable(jsonPath string, spreadsheetId string, readRange string, Client *slackMSG.SlackAPI) (*fibHeap.FibHeap) {
+	// LOG EVENT
 	srv := GetService(jsonPath)
 	template := strings.Replace(readRange, ":", "%s:", 1) + "%s" //Format of a query for a column
 	
-	colNames := fmt.Sprintf(template, []interface{}{"1","1"}...)
-	tableContent := fmt.Sprintf(template, []interface{}{"2", ""}...)
 
-	collumns, err1 :=  srv.Spreadsheets.Values.Get(spreadsheetId, colNames).Do()
-	table, err2 := srv.Spreadsheets.Values.Get(spreadsheetId, tableContent).DateTimeRenderOption("SERIAL_NUMBER").Do()
+	colNames := fmt.Sprintf(template, []interface{}{"1","1"}...)
+	tableContent := fmt.Sprintf(template, []interface{}{"2", ""}...)// TODO BUGSS HERE FIGURE THIS OOUT Find a way to query only necessary rows
 	
+
+	rows, err1 :=  srv.Spreadsheets.Values.Get(spreadsheetId, colNames).Do()
+	table, err2 := srv.Spreadsheets.Values.Get(spreadsheetId, tableContent).DateTimeRenderOption("SERIAL_NUMBER").Do()
+	// LOG EVENTs
 	if err1 != nil || err2 != nil {
 		log.Fatalf("Unable to retrieve data from sheet")
 	}
 
 	if len(table.Values) == 0 {
+		log.Println("table exists but table is empty")
 		return nil
 	
 	} else {
 		StaffTable := fibHeap.NewFibHeap() // FibHeaps, ordered and log(n) extract times, only 2, iteration through time is the same as slices
 		var wg sync.WaitGroup
-
-		for _, col := range(table.Values){
+		// LOG EVENT
+		for i, row := range(table.Values){
 			staffMap := make(map[string]interface{})
-
-			for i, colName := range(collumns.Values[0]){ // Uses column headers to assign the map
-				staffMap[colName.(string)] = col[i]
+			
+			for ii, colName := range(rows.Values[0]){ // Uses column headers to assign the map
+				staffMap[colName.(string)] = row[ii]
 			}
 
-			if staffMap["SlackID"] == nil{
+			if ID :=staffMap["SlackID"]; ID == nil || ID == "" || ID == "No ID Found"{
 				wg.Add(1)
-				go func(){
+				go func(index int, staffrow []interface{}, email string){
 					defer wg.Done()
-					staffMap["SlackID"] = Client.GetSlackID(staffMap["Email"].(string))
-				}()
+					id := Client.GetSlackID(email)
+					staffMap["SackID"] = id
+					write(srv, spreadsheetId, append(staffrow, id), index) 
+				}(i+2, row, staffMap["Email"].(string)) // Rows start at one  and header
 			}
 			StaffTable.InsertValue(&Staff{staffMap})
 			
 		}
 		wg.Wait()
-
+		
+		log.Println("Google sheets table read into memory")
 		return StaffTable
 	}
+}
+
+func write(srv *sheets.Service, spreadsheetId string, staffRow []interface{}, rowNumber int){
+	// LOG WRITES
+	var vr sheets.ValueRange
+	writeRange := fmt.Sprint("B", rowNumber, ":", rowNumber)
+	
+    vr.Values = append(vr.Values, staffRow)
+
+	_, err := srv.Spreadsheets.Values.Update(spreadsheetId, writeRange, &vr).ValueInputOption("RAW").Do()
+    if err != nil {
+        log.Fatalf("Unable to retrieve data from sheet. %v", err)
+    }
 }

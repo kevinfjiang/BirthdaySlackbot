@@ -32,10 +32,10 @@ The purpose of the project is that it is not intended to scale because then it w
 **Admin stuff/documentation**
 - [ ]  Complete ReadMe
 - [x]  Remove my environment variables
-- [ ]  Document environment variables
+- [X]  Document environment variables
 - [x]  Set up AWS Credentials
 - [x]  Set up google cloud credenntials
-- [ ]  Finish Google form template/Google sheets template
+- [X]  Finish Google form template/Google sheets template
 - [ ]  Robustness thorough and document errors page
 
 **Code stuff**
@@ -48,10 +48,11 @@ The purpose of the project is that it is not intended to scale because then it w
 - [x] Set up public messaging and the creatioon of a "Birthday" channel
 - [x] Enable the @ feature to @ the special bday people, and also if the credentials are wrong, use a filler name 
 - [x] Set up template for the slackbot (auth token and permissions) 
-- [ ] Enable Google sheets writes
+- [X] Enable Google sheets writes
 - [x] Use terraform to set up DB
 - [x] Use terraform to set up lambdas
 - [ ] Set up Docker to make deployment easier
 - [ ] Set up interactive slack messages
+- [ ] Set up DB Reads/Writes 
 - [ ] Set up DynamoDB for interactive messages
 </details>
