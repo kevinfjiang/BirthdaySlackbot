@@ -14,8 +14,8 @@ slackBirthdayBot
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
-.DS_Store # Macs
-*secrets* # Secret credentials
+.DS_Store 
+*secrets* 
 .terraform*
 *.zip
 *.tfstate*
