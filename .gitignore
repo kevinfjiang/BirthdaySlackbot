@@ -14,10 +14,11 @@ slackBirthdayBot
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
-.DS_Store
-*secrets*
+.DS_Store # Macs
+*secrets* # Secret credentials
 .terraform*
 *.zip
-terraform.tfstate*
-save_MSG
+*.tfstate*
+SaveMSG*
+MSGBot/MSGBot
 my.env

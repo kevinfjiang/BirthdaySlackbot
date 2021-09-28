@@ -51,6 +51,7 @@ The purpose of the project is that it is not intended to scale because then it w
 - [X] Enable Google sheets writes
 - [x] Use terraform to set up DB
 - [x] Use terraform to set up lambdas
+- [x] Automate github workflow( kinda)
 - [X] MILESTONE: MVP read and writes supported!!!
 - [ ] Add logger support
 - [ ] Set up Docker to make deployment easier

@@ -2,7 +2,7 @@ provider "archive" {}
 
 data "archive_file" "sendMSGzip" {
   type        = "zip"
-  source_file = "/Users/kevinjiang/repo/slackBirthdayBot/MSGBot/MSGBot"
+  source_file = "/Users/kevinjiang/repo/slackBirthdayBot/sMSGBot/MSGBot"
   output_path = "MSGBot.zip"
 }
 
