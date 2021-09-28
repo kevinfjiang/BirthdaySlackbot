@@ -2,7 +2,7 @@ provider "archive" {}
 
 data "archive_file" "sendMSGzip" {
   type        = "zip"
-  source_file = "MSGBot/MSGBot"
+  source_file = "/Users/kevinjiang/repo/slackBirthdayBot/MSGBot/MSGBot"
   output_path = "MSGBot.zip"
 }
 
@@ -29,16 +29,11 @@ resource "aws_iam_role" "iam_for_lambda" {
 resource "aws_lambda_function" "MSGBotlambda" {
   function_name = "MSGBotlambda"
 
-  filename         = "${data.archive_file.zip.output_path}"
-  source_code_hash = "${data.archive_file.zip.output_base64sha256}"
+  filename         = "${data.archive_file.sendMSGzip.output_path}"
+  source_code_hash = "${data.archive_file.sendMSGzip.output_base64sha256}"
 
   role    = "${aws_iam_role.iam_for_lambda.arn}"
   handler = "MSGBot"
   runtime = "go1.x"
 
-#   environment {
-#     variables = {
-#       greeting = "Hello"
-#     }
-#   }
 }
