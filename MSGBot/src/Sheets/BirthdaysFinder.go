@@ -78,8 +78,8 @@ func Prep_BDAY_MSG(prebirthday []interface{}, birthday []interface{}, FB *fibHea
 	}
 }
 
-func Send_BDAY_Private_MSG(birthday []interface{}, DB interface{}, Client *slackMSG.SlackAPI){
+func Send_BDAY_Private_MSG(birthday []interface{}, DB *slackMSG.DBConnect, Client *slackMSG.SlackAPI){
 	for _, bday := range(birthday){	
-		Client.Get_Private_Message(bday.(*Staff).Val, DB)
+		Messages := DB.Get_Private_Message(bday.(*Staff).Val, DB)
 	}
 }

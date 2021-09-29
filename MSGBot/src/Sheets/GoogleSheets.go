@@ -1,4 +1,4 @@
-package googleSheets
+package Sheets
 
 import (
 	"fmt"
