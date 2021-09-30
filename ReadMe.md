@@ -15,7 +15,7 @@ The purpose of the project is that it is not intended to scale because then it w
 
 **Google sheets**: Very easy to use and set up with a google form. Also, can be used as a database for birthdays and other public info in order
 
-**AWS Lambda**: Serverless application so I don't have to worry about running an EC2 server and all the management that comes with that. It only needs to run once a day or when people submit extra messages to the user
+**AWS EC2**: I wanted an ec2 server, this isn't that intensive application so i'll probs run other stuff on it as well. Wanted to write a bot that monitoorss in python too. 
 
 **AWS DynamoDB**: The interactive messages allow a user to send a url/message to the birthday person and stores it in the DB. The key<>document database makes it easy to pull up the info for the specific birthday person and ssend the information. Ideally, would use AWS Keyspaces but the free trial is monthly for Keyspaces instead of the flat 25 GB for AWS DynamoDB
 
@@ -50,7 +50,7 @@ The purpose of the project is that it is not intended to scale because then it w
 - [x] Set up template for the slackbot (auth token and permissions) 
 - [X] Enable Google sheets writes
 - [x] Use terraform to set up DB
-- [x] Use terraform to set up lambdas
+- [x] Use terraform to set up ec2
 - [x] Automate github workflow( kinda)
 - [X] MILESTONE: MVP read and writes supported!!!
 - [ ] Add logger support
