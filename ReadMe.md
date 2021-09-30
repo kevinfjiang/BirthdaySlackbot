@@ -60,4 +60,5 @@ The purpose of the project is that it is not intended to scale because then it w
 - [X] Set up DB Reads/Writes 
 - [ ] Set up github workflows and doocker deployment
 - [X] Set up DynamoDB for interactive messages
+- [ ] "interactive" demo for recruiters ig
 </details>
