@@ -58,5 +58,6 @@ The purpose of the project is that it is not intended to scale because then it w
 - [ ] Set up Docker to make deployment easier
 - [ ] Set up interactive slack messages
 - [X] Set up DB Reads/Writes 
-- [ ] Set up DynamoDB for interactive messages
+- [ ] Set up github workflows and doocker deployment
+- [X] Set up DynamoDB for interactive messages
 </details>
