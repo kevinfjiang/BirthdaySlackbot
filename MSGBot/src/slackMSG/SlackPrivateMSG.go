@@ -1,20 +1,20 @@
-package SSlackMSG
+package SlackMSG
 
 import (
-	"fmt"
-	"log"
+	// "fmt"
+	// "log"
 	"sync"
 
 	"github.com/slack-go/slack"
 )
 
-func (SA SlackAPI) Get_Private_Message(birthday map[string]interface{}, DB *DBConnect){
+func (SA SlackAPI) Get_Private_Message(birthday map[string]interface{}, DB DBConnect) {
 	Messages := DB.Get_MSG(birthday) // Write this
 	ID := birthday["SlackID"].(string)
 	var wg sync.WaitGroup
-	for _, message := range(Messages){
+	for _, message := range Messages {
 		wg.Add(1)
-		go func(MSG *Message){
+		go func(MSG *Message) {
 			opt := genOpts(MSG) // Write thiss
 			SA.PostMessage(ID, opt)
 		}(message)
@@ -22,10 +22,11 @@ func (SA SlackAPI) Get_Private_Message(birthday map[string]interface{}, DB *DBCo
 	wg.Wait()
 }
 
-func genOpts(MSG *Message) []slack.MsgOption{ // TODO write this function legit
-	return []slack.MsgOption{
-		slack.MsgOption(slack.MsgOptionText(fmt.Sprintf(msgFunc(len(birthdayPersons)), birthdayPersons...), true),),
-		slack.MsgOption(slack.MsgOptionPostMessageParameters(slack.PostMessageParameters{LinkNames: len(birthdayPersons), 
-																						IconEmoji: ":tada:",}),),
-	}
+func genOpts(MSG *Message) slack.MsgOption { // TODO write this function legit
+	return nil
+	// return slack.MsgOption{
+	// 	slack.MsgOption(slack.MsgOptionText(fmt.Sprintf(msgFunc(len(birthdayPersons)), birthdayPersons...), true),),
+	// 	slack.MsgOption(slack.MsgOptionPostMessageParameters(slack.PostMessageParameters{LinkNames: len(birthdayPersons),
+	// 																					IconEmoji: ":tada:",}),),
+	// }
 }

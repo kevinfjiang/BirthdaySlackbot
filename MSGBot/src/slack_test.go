@@ -1,32 +1,30 @@
 package main
-	
+
 import (
-	"testing"
 	"fmt"
-    "os"
+	"github.com/kevinfjiang/slackBirthdayBot/src/SlackMSG"
 	"github.com/kevinfjiang/slackBirthdayBot/src/googleSheets"
-	"github.com/kevinfjiang/slackBirthdayBot/src/slackMSG"
+	"os"
+	"testing"
 )
 
-
-func TestSendMessage(t *testing.T){
+func TestSendMessage(t *testing.T) {
 	api := slackMSG.New_SlackAPI(os.Getenv("SLACKBOT_TOKEN"))
 	_, err := api.Send_MSG("Test_Message", "kfj2112@columbia.edu")
-	if err != nil{
+	if err != nil {
 		t.Errorf("ERROR WITH SEND")
 	}
 }
 
-
-func TestGoogleapi(t *testing.T){
+func TestGoogleapi(t *testing.T) {
 	api := slackMSG.New_SlackAPI(os.Getenv("SLACKBOT_TOKEN"))
 	birthdayTable := googleSheets.GetTable(os.Getenv("GOOGLE_API_JSON"), os.Getenv("GOOGLE_SHEETS_ID"), "B:E", api)
-	a,b := googleSheets.Find_BDAYS(birthdayTable)
+	a, b := googleSheets.Find_BDAYS(birthdayTable)
 	fmt.Println(a)
 	fmt.Println(b)
 }
 
-func TestBDAYCHANNEL(t *testing.T){
+func TestBDAYCHANNEL(t *testing.T) {
 	api := slackMSG.New_SlackAPI(os.Getenv("SLACKBOT_TOKEN"))
 	ret := api.Get_BDAY_CHANNEL()
 	if ret == "" {

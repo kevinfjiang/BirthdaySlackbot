@@ -1,11 +1,11 @@
-package slackMSG
+package SlackMSG
 
 import (
-    "math/rand"
+	"math/rand"
 	"time"
 )
 
-func init(){
+func init() {
 	rand.Seed(time.Now().UnixNano()) // random selects
 }
 
@@ -21,16 +21,14 @@ var PRE_BDAY_MESSAGE = map[int][]string{
 
 var AnonName = []string{"A special someone", "An oldie fella", "An oldie but a goodie", "Gramps", "Special person"}
 
-
-
-func Get_birthdayMSG(BDAYPEOPLE int) (string){
+func Get_birthdayMSG(BDAYPEOPLE int) string {
 	return BDAY_MESSAGE[BDAYPEOPLE][rand.Intn(len(BDAY_MESSAGE[BDAYPEOPLE]))]
 }
 
-func Get_pre_birthdayMSG(countVIPS int) (string){
+func Get_pre_birthdayMSG(countVIPS int) string {
 	return PRE_BDAY_MESSAGE[countVIPS][rand.Intn(len(PRE_BDAY_MESSAGE[countVIPS]))]
 }
 
-func Get_Anon_Name()string{
+func Get_Anon_Name() string {
 	return AnonName[rand.Intn(len(AnonName))]
 }

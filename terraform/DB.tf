@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "birthday_message_db" {
-    name           = "bday_messages"
+    name           = "Bday_Messages"
     billing_mode   = "PROVISIONED"
     read_capacity  = 20
     write_capacity = 20
