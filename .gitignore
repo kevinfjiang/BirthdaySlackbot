@@ -19,6 +19,5 @@ slackBirthdayBot
 .terraform*
 *.zip
 *.tfstate*
-SaveMSG*
-MSGBot/MSGBot
-my.env
+SpinUp
+
