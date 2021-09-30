@@ -53,9 +53,10 @@ The purpose of the project is that it is not intended to scale because then it w
 - [x] Use terraform to set up ec2
 - [x] Automate github workflow( kinda)
 - [X] MILESTONE: MVP read and writes supported!!!
-- [ ] Add logger support
+- [X] Add logger support
+- [ ] Finish setting up server
 - [ ] Set up Docker to make deployment easier
 - [ ] Set up interactive slack messages
-- [ ] Set up DB Reads/Writes 
+- [X] Set up DB Reads/Writes 
 - [ ] Set up DynamoDB for interactive messages
 </details>
