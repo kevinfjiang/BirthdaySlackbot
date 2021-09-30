@@ -23,7 +23,7 @@ func Find_BDAYS(FB *fibHeap.FibHeap) ([]interface{}, []interface{}) {
 		staff, _ := FB.ExtractMin()
 		prebirthday = append(prebirthday, staff)
 	}
-	log.Print("BDAYS and PreBDAYS found")
+	log.Print("[INFO] BDAYS and PreBDAYS found")
 	return prebirthday, birthday
 }
 

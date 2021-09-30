@@ -1,19 +1,23 @@
 package main
 // TODO write a shema for the database (ON PAPER), set up cloud watch, and that's all
 import (
-        // "fmt"
-        // "context"
-        "github.com/aws/aws-lambda-go/lambda"
+        "fmt"
+		"log"
+        "net/http"
+
+		"github.com/kevinfjiang/slackBirthdayBot/DynamoWrites/src/DBWrite"
 )
 
-type MyEvent struct {
-	Name string `json:"name"`
-}
-
-func handleRequest () (string, error) {
-    return "Hello from Go!", nil
-}
 
 func main() {
-	lambda.Start(handleRequest)
+	dyno := DBWrite.Get_DB_Connect()
+
+	srv := &http.Server{
+        Addr:         ":8080",
+        Handler:      http.HandlerFunc(dyno.pmHandler),
+    }
+	defer srv.Close()
+	if err_http := srv.ListenAndServe(); err_http != nil {
+		log.Fatal("[ERROR] Server Crashed: ", err_http)
+	}
 }
