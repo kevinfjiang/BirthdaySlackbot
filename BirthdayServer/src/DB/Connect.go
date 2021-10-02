@@ -11,6 +11,7 @@ import (
 )
 
 type DBConnect struct {
+	TableName string
 	*dynamodb.DynamoDB 
 }
 
@@ -23,5 +24,5 @@ func Get_DB_Connect() DBConnect {
 			r.ClientInfo.ServiceName, r.Operation, r.Params)
 	})
 
-	return DBConnect{dynamodb.New(sess)} // Double check this is valids
+	return DBConnect{"Table", dynamodb.New(sess)} // Double check this is valids
 }

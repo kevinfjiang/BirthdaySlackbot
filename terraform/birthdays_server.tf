@@ -1,42 +1,58 @@
 #Create security group with firewall rules
-resource "aws_security_group" "generic-server" {
-  name        = var.security_group
-  description = "security group for server"
+provider "aws" {
+    region = "${var.aws_region}"
+    shared_credentials_file = "~/.aws/credentials"
+} 
 
-  ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+data "archive_file" "zip" {
+  type        = "zip"
+  source_file = var.Path
+  output_path = "BirthdayMSG.zip"
+}
+resource "aws_cloudwatch_log_group" "log" {
+  name              = "/aws/lambda/${var.aws_lambda_function}"
+  retention_in_days = 14
+}
 
- # outbound from server
-  egress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_iam_role" "iam_for_lambda" {
+  name               = "iam_for_lambda"
+  assume_role_policy = "${data.aws_iam_policy_document.policy.json}"
+}
 
-  tags= {
-    Name = var.security_group
+data "aws_iam_policy_document" "policy" {
+  statement {
+    sid    = ""
+    effect = "Allow"
+
+    principals {
+      identifiers = ["lambda.amazonaws.com"]
+      type        = "Service"
+    }
+
+    actions = ["sts:AssumeRole"]
   }
 }
 
-resource "aws_instance" "kevin_server" {
-  ami           = var.ami_id
-  key_name      = var.key_name
-  instance_type = var.instance_type
-  tags= {
-    Name = var.tag_name
-  }
-}
+resource "aws_lambda_function" "Birthdays" {
+  function_name = "${var.aws_lambda_function}"
 
-# Create Elastic IP address
-resource "aws_eip" "kevin_server" {
-  vpc      = true
-  instance = aws_instance.kevin_server.id
-tags= {
-    Name = "kevins_elastic_ip"
+  filename         = "${data.archive_file.zip.output_path}"
+  source_code_hash = "${data.archive_file.zip.output_base64sha256}"
+
+  role    = "${aws_iam_role.iam_for_lambda.arn}"
+  handler = "BirthdayFinder.lambda_handler"
+  runtime = "go1.x"
+
+  environment {
+    variables = {
+      SLACKBOT_TOKEN   = var.SLACKBOT_TOKEN
+      GOOGLE_API_JSON  = var.GOOGLE_API_JSON
+      GOOGLE_SHEETS_ID = var.GOOGLE_SHEETS_ID
+    }
   }
+
+  tags = {
+        Name        = "lambda-birthday"
+        Environment = "production"
+    }
 }

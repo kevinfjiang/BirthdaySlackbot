@@ -28,11 +28,11 @@ func Find_BDAYS(FB *fibHeap.FibHeap) ([]interface{}, []interface{}) {
 	return prebirthday, birthday
 }
 
-func Prep_BDAY_MSG(prebirthday []interface{}, birthday []interface{}, FB *fibHeap.FibHeap, Client SlackMSG.SlackAPI) {
+func Prep_BDAY_MSG(prebirthday []interface{}, birthday []interface{}, nonBdays  []interface{}, Client SlackMSG.SlackAPI) {
 	if len(prebirthday) > 0 {
 		prebirthdayNames := get_Bday_Names(Client, prebirthday)
 
-		for _, bday := range append(FB.GetIter(), birthday) { // []interface{}
+		for _, bday := range append(nonBdays, birthday) { // []interface{}
 			Client.Send_BDAY_MSG(prebirthdayNames, bday.(*Staff).Val["SlackID"].(string), SlackMSG.Get_pre_birthdayMSG)
 		}
 
@@ -62,7 +62,7 @@ func get_Bday_Names(Client SlackMSG.SlackAPI, staffList []interface{}) []interfa
 
 		go func(i int) {
 			defer wg.Done()
-			linked := Client.Get_User_Link(staffList[i].(*Staff).Val["Email"].(string))
+			linked := Client.Get_User_Link(staffList[i].(*Staff).Val["Email"].(string), "Email")
 			if linked == "" && (staffList[i].(*Staff).Val["Name"] != nil) {
 				linked = staffList[i].(*Staff).Val["Name"].(string)
 

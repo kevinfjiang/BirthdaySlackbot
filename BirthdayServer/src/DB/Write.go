@@ -1,38 +1,49 @@
 package DB
 
 import (
-	// "fmt"
+	"fmt"
 	"log"
 	// "time"
-	"net/http"
 
-	// "github.com/aws/aws-sdk-go/aws"
-	// "github.com/aws/aws-sdk-go/service/dynamodb"
-	// "github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 
-func process_request(r *http.Request) *PMessage{
+type MSGEvent struct {
+	Type	 		string `json:"Type of MSG"`
+	BirthdayPerson	string `json:"The Bday Pal ID"`
+	SenderPerson 	string `json: "The Sender's ID`
+	Message 		string `json:"Message for user"`
+
+}
+
+func process_request(message *MSGEvent) *PMessage{
+	// LOt of processing necessary
 	return nil
 }
 
-func (DB DBConnect) write(*PMessage) error {
+func (DB DBConnect) write(message *PMessage) error { // Incorporate a Time to live
+	row, err := dynamodbattribute.MarshalMap(*message)
+	if err != nil {
+		log.Fatalln(fmt.Sprintf("[FATAL] failed to DynamoDB marshal Record, %v", err))
+	}
+
+	_, err = DB.PutItem(&dynamodb.PutItemInput{
+		TableName: aws.String(DB.TableName),
+		Item:      row,
+	})
+	if err != nil {
+		log.Fatalln(fmt.Sprintf("[FATAL] Failed to put Record to DynamoDB, %v", err))
+	}
 	return nil
 }
 
-func (DB DBConnect) PMHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "Post" {
-        http.Error(w, "Method is not supported.", http.StatusNotFound)
-        return
-    }
-
-	// if err := r.ParseForm(); err != nil {
-    //     fmt.Fprintf(w, "ParseForm() err: %v", err)
-    //     return
-    // }
-
-    request := process_request(r)
+func (DB DBConnect) MessageHandle(message *MSGEvent) string{
+    request := process_request(message)
 	if err := DB.write(request); err != nil{
 		log.Fatal("[ERROR] %v", err)
 	}
+	return ""
 
 }

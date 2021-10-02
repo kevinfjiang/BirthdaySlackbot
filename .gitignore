@@ -5,6 +5,7 @@ slackBirthdayBot
 *.dll
 *.so
 *.dylib
+SpinUp
 
 # Test binary, built with `go test -c`
 *.test
@@ -12,12 +13,14 @@ slackBirthdayBot
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+#Terraform stuff
+.terraform*
+*.tfstate*
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
 .DS_Store 
-*secrets* 
-.terraform*
+.secrets.json 
 *.zip
-*.tfstate*
-SpinUp
+.env
 

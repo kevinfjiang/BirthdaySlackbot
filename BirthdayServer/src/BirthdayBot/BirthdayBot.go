@@ -10,23 +10,27 @@ import (
 
 type Creds struct{
 	SLACKBOT_TOKEN string
-	GOOOGLE_API_JSON string
+	GOOGLE_API_JSON string
 	GOOGLE_SHEETS_ID string
-	DB_TOKEN string
+
+	DB_Connect DB.DBConnect // Write DB errors one of these days!!
 }
 
 func GetCreds()*Creds{
 	return &Creds{
-		SLACKBOT_TOKEN:   os.Getenv("SLACKBOT_TOKEN"),
-		GOOOGLE_API_JSON: os.Getenv("GOOGLE_API_JSON"),
-		GOOGLE_SHEETS_ID: os.Getenv("GOOGLE_SHEETS_ID"),
+		SLACKBOT_TOKEN:		os.Getenv("SLACKBOT_TOKEN"),
+		GOOGLE_API_JSON:  	os.Getenv("GOOGLE_API_JSON"),
+		GOOGLE_SHEETS_ID: 	os.Getenv("GOOGLE_SHEETS_ID"),
+
+		DB_Connect:		  	DB.Get_DB_Connect(),
 	}
 
 }
 
-func GetBDAYPeople(Cred *Creds) []*Sheets.Staff{
-	api := SlackMSG.New_SlackAPI(os.Getenv("SLACKBOT_TOKEN"))
-	FB := Sheets.GetTable(os.Getenv("GOOGLE_API_JSON"), os.Getenv("GOOGLE_SHEETS_ID"), "B:E", api)
+func (Cred *Creds) GetBDAYPeople() []*Sheets.Staff{
+	api := SlackMSG.New_SlackAPI(Cred.SLACKBOT_TOKEN)
+	FB := Sheets.GetTable(Cred.GOOGLE_API_JSON, Cred.GOOGLE_SHEETS_ID, "B:E", api)
+	
 	_, Bdays := Sheets.Find_BDAYS(FB)
 
 	var StaffBdays []*Sheets.Staff // Type correction
@@ -34,17 +38,17 @@ func GetBDAYPeople(Cred *Creds) []*Sheets.Staff{
 		StaffBdays = append(StaffBdays, staffmember.(*Sheets.Staff))
 	}
 
-
 	return StaffBdays
 }
 
-func SendDailyMSG(Cred *Creds) {
-	api := SlackMSG.New_SlackAPI(os.Getenv("SLACKBOT_TOKEN"))
-	FB := Sheets.GetTable(os.Getenv("GOOGLE_API_JSON"), os.Getenv("GOOGLE_SHEETS_ID"), "B:E", api)
+func (Cred *Creds) SendDailyMSG() string{
+	api := SlackMSG.New_SlackAPI(Cred.SLACKBOT_TOKEN)
+	FB := Sheets.GetTable(Cred.GOOGLE_API_JSON, Cred.GOOGLE_SHEETS_ID, "B:E", api)
+	
 	PreBdays, Bdays := Sheets.Find_BDAYS(FB)
 
-	dbConnect := DB.Get_DB_Connect()
+	Sheets.Send_BDAY_Private_MSG(Bdays, Cred.DB_Connect, api)
+	Sheets.Prep_BDAY_MSG(PreBdays, Bdays, FB.GetIter(), api)
 
-	Sheets.Send_BDAY_Private_MSG(Bdays, dbConnect, api)
-	Sheets.Prep_BDAY_MSG(PreBdays, Bdays, FB, api)
+	return "SendDailyMSG executed without interuption"
 }

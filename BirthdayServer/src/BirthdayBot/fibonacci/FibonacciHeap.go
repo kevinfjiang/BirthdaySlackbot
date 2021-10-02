@@ -528,7 +528,7 @@ func (heap *FibHeap) cascadingCut(n *node) {
 
 
 func (heap *FibHeap) GetIter() []interface{} {
-	valueSlice := []interface{}{}
+	var valueSlice []interface{}
 	for _, node := range(heap.index){
 		valueSlice = append(valueSlice, node.tag)
 	}

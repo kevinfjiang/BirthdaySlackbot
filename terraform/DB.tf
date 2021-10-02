@@ -3,16 +3,16 @@ resource "aws_dynamodb_table" "birthday_message_db" {
     billing_mode   = "PROVISIONED"
     read_capacity  = 20
     write_capacity = 20
-    hash_key       = "SlackID_Year"
+    hash_key       = "BirthdayID_Year"
     range_key      = "Message"
 
     attribute {
-        name = "SlackID_Year"
+        name = "BirthdayID_Year"
         type = "S"
     }
 
     attribute {
-        name = "MessageUser"
+        name = "SenderID"
         type = "S"
     }
 
@@ -28,16 +28,16 @@ resource "aws_dynamodb_table" "birthday_message_db" {
 
     global_secondary_index {
         name               = "PrivateBdayMSG"
-        hash_key           = "MessageUser"
+        hash_key           = "SenderID"
         range_key          = "Message"
         write_capacity     = 10
         read_capacity      = 10
         projection_type    = "INCLUDE"
-        non_key_attributes = ["SlackID_Year"]
+        non_key_attributes = ["BirthdayID_Year"]
     }
 
     tags = {
-        Name        = "dynamodb-table-1"
+        Name        = "dynamodb-table-birthday"
         Environment = "production"
     }
 }

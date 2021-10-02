@@ -7,40 +7,34 @@ terraform {
     }
 }
 
-
 variable "aws_region" {
-  description = "The AWS region to create into"
-  default     = "us-east-2"
+  description = "The AWS region to create things in."
+  default     = "eu-west-2"
 }
 
-provider "aws" {
-    region = "${var.aws_region}"
-    shared_credentials_file = "~/.aws/credentials"
+variable "aws_lambda_function" {
+  default = "Birthday_Messagers"
+}
+
+output "Birthdays" {
+  value = "${aws_lambda_function.Birthdays.qualified_arn}"
+}
+
+variable "Path"{
+    type = string
 } 
-#t2.micro AWS
-variable "key_name" { 
-    description = " SSH keys to connect to ec2 instance" 
-    default     =  "kevins_2018Mac_key" 
+
+# Enviroinment variables
+variable "SLACKBOT_TOKEN" {
+  type = string
 }
 
-variable "instance_type" { 
-    description = "instance type for ec2" 
-    default     =  "t2.micro" 
+variable "GOOGLE_API_JSON" {
+  type = string
 }
 
-variable "security_group" { 
-    description = "Name of security group" 
-    default     = "generic-server" 
+variable "GOOGLE_SHEETS_ID" {
+  type = string
 }
-
-variable "tag_name" { 
-    description = "Tag Name of for Ec2 instance" 
-    default     = "ec2-instance" 
-} 
-variable "ami_id" { 
-    description = "AMI for Ubuntu Ec2 instance" 
-    default     = "ami-00399ec92321828f5" 
-}
-
 
 

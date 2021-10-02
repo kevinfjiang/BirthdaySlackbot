@@ -67,10 +67,16 @@ func (SA SlackAPI) GetSlackID(Email string) string {
 	return userID.ID
 }
 
-func (SA SlackAPI) Get_User_Link(Email string) string {
-	userID, err := SA.GetUserByEmail(Email)
-	if err != nil || userID.Name == "" {
-		log.Printf("[INFO] Username not found for %s", Email)
+func (SA SlackAPI) Get_User_Link(IdentifierString string, Type string) string {
+	var userID *slack.User
+	var err error = nil
+	if Type == "Email"{
+		userID, err = SA.GetUserByEmail(IdentifierString)
+	} else if Type == "ID" {
+		userID, err = SA.GetUserInfo(IdentifierString)
+	}
+	if err != nil || userID == nil{
+		log.Printf("[INFO] Username not found for %s", IdentifierString)
 		return ""
 	}
 	return "@" + userID.Name

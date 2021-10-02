@@ -10,17 +10,19 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 
-type PMessage struct { // TODO define Message
+type PMessage struct { // Defined as the return structure of DynamoDB
+	BirthdayID_Year 	string
+	SenderID	 		string
+	Message 			string
 }
 
 func (DB DBConnect) Get_MSG(birthday map[string]interface{}) []*PMessage {
 	log.Printf("[INFO] Reading DB for %s", birthday["Name"].(string))
-	result, err := DB.Query(&dynamodb.QueryInput{
-		TableName: aws.String("Bday_Messages"),
+
+	result, err := DB.Query(&dynamodb.QueryInput{ // Make query legit
+		TableName: aws.String(DB.TableName),
 		KeyConditionExpression: aws.String(fmt.Sprint(
-			"partitionKeyName = :%s_%s",
-			birthday["Slack_ID"],
-			time.Now().Year())),
+			"partitionKeyName = :%s_%s", birthday["Slack_ID"], time.Now().Year())),
 	})
 	log.Printf("[INFO] Reading DB finished for %s", birthday["Name"].(string))
 
@@ -29,7 +31,7 @@ func (DB DBConnect) Get_MSG(birthday map[string]interface{}) []*PMessage {
 	}
 
 	if *(result.Count) == int64(0) {
-		log.Printf("[INFO] Found Messages Found for %s", time.Now().Format("January 2, 2006"))
+		log.Printf("[INFO] %d Messages Found for %s", *(result.Count), time.Now().Format("January 2, 2006"))
 		return nil
 	}
 
