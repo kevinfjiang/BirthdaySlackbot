@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "policy" {
   }
 }
 
-resource "aws_lambda_function" "Birthdays" {
+resource "aws_lambda_function" "Birthday_lambda" {
   function_name = "${var.aws_lambda_function}"
 
   filename         = "${data.archive_file.zip.output_path}"

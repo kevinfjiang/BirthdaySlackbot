@@ -23,8 +23,9 @@ func (SA SlackAPI) Get_Private_Message(birthday map[string]interface{}, db DB.DB
 	wg.Wait()
 }
 
-func genOpts(MSG *DB.PMessage) slack.MsgOption { // TODO write this function legit
+func genOpts(MSG *DB.PMessage) slack.MsgOption { 
 	return nil
+	// TODO set up gen oopts for every slack message
 	// return slack.MsgOption{
 	// 	slack.MsgOption(slack.MsgOptionText(fmt.Sprintf(msgFunc(len(birthdayPersons)), birthdayPersons...), true),),
 	// 	slack.MsgOption(slack.MsgOptionPostMessageParameters(slack.PostMessageParameters{LinkNames: len(birthdayPersons),

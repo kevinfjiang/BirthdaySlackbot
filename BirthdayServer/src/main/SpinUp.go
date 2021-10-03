@@ -12,7 +12,12 @@ import (
 		"github.com/aws/aws-lambda-go/lambda"
 )
 
+ var Cred *BirthdayBot.Creds
 
+func init(){
+	Cred = BirthdayBot.GetCreds() // New connection esstablished everytime.
+	// TODO write more tests to ensure functions are all valid, consider using concurrency if need be
+}
 
 func NotFound(Type string) error {
 	return errors.New(fmt.Sprintf("MSGEvent Type not found %s", Type))
@@ -20,18 +25,19 @@ func NotFound(Type string) error {
 
 func HandleRequest(ctx context.Context, event DB.MSGEvent) (string, error) {
 	log.Printf("[INFO] Received event %s", event.Type)
-	Cred := BirthdayBot.GetCreds() // New connection esstablished everytime.
-	var reply string = ""
+
+	var reply string 
 	var err error = nil
 
 	switch event.Type{
 	case "Wish":
 		reply = Cred.DB_Connect.MessageHandle(&event)
 	case "DailyPing":
-		reply = Cred.SendDailyMSG() // All it does is check the typpe and moves from there
+		reply = Cred.SendDailyMSG(event.SendPM) // All it does is check the typpe and moves from there
 	case "GenWeb":
 		reply = ""
 	default:
+		reply = ""
 		err = NotFound(event.Type)
 	} 
 	return reply, err
@@ -39,8 +45,6 @@ func HandleRequest(ctx context.Context, event DB.MSGEvent) (string, error) {
 
 
 
-func main() { // Rewrite thiss, some how include multiple handle funcs
-	// Figure out integration of the outter iteraction with the DB and BirthdayBot Interaction
-	
+func main() {
 	lambda.Start(HandleRequest)
 }

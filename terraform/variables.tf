@@ -17,7 +17,7 @@ variable "aws_lambda_function" {
 }
 
 output "Birthdays" {
-  value = "${aws_lambda_function.Birthdays.qualified_arn}"
+  value = "${aws_lambda_function.Birthday_lambda.qualified_arn}"
 }
 
 variable "Path"{

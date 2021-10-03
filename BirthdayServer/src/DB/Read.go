@@ -21,13 +21,13 @@ func (DB DBConnect) Get_MSG(birthday map[string]interface{}) []*PMessage {
 
 	result, err := DB.Query(&dynamodb.QueryInput{ // Make query legit
 		TableName: aws.String(DB.TableName),
-		KeyConditionExpression: aws.String(fmt.Sprint(
-			"partitionKeyName = :%s_%s", birthday["Slack_ID"], time.Now().Year())),
+		KeyConditionExpression: aws.String(fmt.Sprintf(
+			"partitionKeyName = :%s_%d", birthday["Slack_ID"], time.Now().Year())),
 	})
 	log.Printf("[INFO] Reading DB finished for %s", birthday["Name"].(string))
 
 	if err != nil {
-		log.Fatalln("[ERROR] Got error calling GetItem: %s", err)
+		log.Fatalf("[ERROR] Got error calling GetItem: %v", err)
 	}
 
 	if *(result.Count) == int64(0) {
@@ -36,7 +36,7 @@ func (DB DBConnect) Get_MSG(birthday map[string]interface{}) []*PMessage {
 	}
 
 	var Messages []*PMessage
-	for i, _ := range result.Items {
+	for i := range result.Items {
 		response := PMessage{} // Consider multiple rows, just iterate through the rows
 		err = dynamodbattribute.UnmarshalMap(result.Items[i], &response)
 		if err != nil {

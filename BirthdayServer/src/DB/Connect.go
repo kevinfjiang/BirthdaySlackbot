@@ -20,7 +20,7 @@ func Get_DB_Connect() DBConnect {
 	sess := session.Must(session.NewSession())
 	
 	sess.Handlers.Send.PushFront(func(r *request.Request) {
-		log.Printf("[INFO] Request: %s/%s, Params: %s",
+		log.Printf("[INFO] Request: %s/%v, Params: %s",
 			r.ClientInfo.ServiceName, r.Operation, r.Params)
 	})
 

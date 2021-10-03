@@ -13,13 +13,16 @@ import (
 type MSGEvent struct {
 	Type	 		string `json:"Type of MSG"`
 	BirthdayPerson	string `json:"The Bday Pal ID"`
-	SenderPerson 	string `json: "The Sender's ID`
+	SenderPerson 	string `json:"The Sender's ID"`
+
 	Message 		string `json:"Message for user"`
+
+	SendPM			bool   `json:"Whether to send private messsages"`
 
 }
 
 func process_request(message *MSGEvent) *PMessage{
-	// LOt of processing necessary
+	// TODO Lot of processing necessary
 	return nil
 }
 
@@ -42,7 +45,7 @@ func (DB DBConnect) write(message *PMessage) error { // Incorporate a Time to li
 func (DB DBConnect) MessageHandle(message *MSGEvent) string{
     request := process_request(message)
 	if err := DB.write(request); err != nil{
-		log.Fatal("[ERROR] %v", err)
+		log.Fatalf("[ERROR] %s", err)
 	}
 	return ""
 

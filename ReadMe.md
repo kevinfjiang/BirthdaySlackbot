@@ -51,12 +51,13 @@ The purpose of the project is that it is not intended to scale because then it w
 - [X] Enable Google sheets writes
 - [x] Use terraform to set up DB
 - [x] Use terraform to set up lambda
-- [x] Automate github workflow( kinda)
+- [x] Automate github workflow(kinda)
 - [X] MILESTONE: MVP read and writes supported!!!
 - [X] Add logger support
-- [ ] Set up interactive slack messages
-- [X] Set up DB Reads/Writes 
+- [X] Set up DB Reads/Writes
+- [ ] Write some unittests 
 - [ ] Set up github workflows 
+- [ ] Set up interactive slack messages
 - [X] Set up DynamoDB for interactive messages
 - [ ] "interactive" demo for recruiters ig
 </details>

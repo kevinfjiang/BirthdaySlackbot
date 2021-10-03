@@ -101,7 +101,7 @@ func GetTable(jsonPath string, spreadsheetId string, readRange string, Client Sl
 					defer wg.Done()
 					id := Client.GetSlackID(email)
 					staffMap["SackID"] = id
-					log.Println("[INFO] %s got new id %s in row %d", email, id, index)
+					log.Printf("[INFO] %s got new id %s in row %d", email, id, index)
 					write(srv, spreadsheetId, append(staffrow, id), index)
 				}(i+2, row, staffMap["Email"].(string)) // Rows start at one and header so +2
 			}
@@ -123,6 +123,6 @@ func write(srv *sheets.Service, spreadsheetId string, staffRow []interface{}, ro
 
 	_, err := srv.Spreadsheets.Values.Update(spreadsheetId, writeRange, &vr).ValueInputOption("RAW").Do()
 	if err != nil {
-		log.Fatalln("Unable to retrieve data from sheet. %v", err)
+		log.Fatalf("Unable to retrieve data from sheet. %v", err)
 	}
 }
