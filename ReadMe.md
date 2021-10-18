@@ -1,5 +1,5 @@
 
-<p align="center"><img src=".github/workflows/slack%20banner.jpg" alt="drawing" width="200"/></p>
+<p align="center"><img src=".github/workflows/slack%20banner.jpg" alt="drawing" width="400"/></p>
 
 # Birthday Notify Bot
 > **Get insta notified and send gifts to your co-workers without the price**
