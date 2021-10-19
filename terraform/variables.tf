@@ -8,19 +8,25 @@ terraform {
 }
 
 variable "aws_region" {
-  description = "The AWS region to create things in."
-  default     = "eu-west-2"
+  description = "Home AWS."
+  default     = "us-east-1"
 }
 
+provider "aws" {
+    region = "${var.aws_region}"
+    shared_credentials_file = "~/.aws/credentials"
+} 
+
+#ENV Variables
 variable "aws_lambda_function" {
-  default = "Birthday_Messagers"
+  default = "Birthday_Message_Lambda"
 }
 
 output "Birthdays" {
-  value = "${aws_lambda_function.Birthday_lambda.qualified_arn}"
+  value = "${aws_lambda_function.birthday_lambda.qualified_arn}"
 }
 
-variable "Path"{
+variable "PATH"{
     type = string
 } 
 

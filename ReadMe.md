@@ -2,7 +2,7 @@
 <p align="center"><img src=".github/workflows/slack%20banner.jpg" alt="drawing" width="400"/></p>
 
 # Birthday Notify Bot
-> **Get insta notified and send gifts to your co-workers without the price**
+> **Get insta notified and send gifts to your co-workers without the fee**
 
 ### **Premise:**
 For an NGO I work for, we loved having the slackbot notify us of specific birthdays. Recently, that service ended and the creators have requested $2 per user per month for the bot. For our team of over 100+, that'd adds up to $2400 a year, which is about half the profit we make annually. I have a free alternative that is relatively easy to set up for less techy people that want a slack birthday bot 

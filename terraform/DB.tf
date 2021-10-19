@@ -37,7 +37,7 @@ resource "aws_dynamodb_table" "birthday_message_db" {
     }
 
     tags = {
-        Name        = "dynamodb-table-birthday"
+        Name        = "dynamodb_table_birthday"
         Environment = "production"
     }
 }
