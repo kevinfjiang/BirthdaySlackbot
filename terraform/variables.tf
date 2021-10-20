@@ -8,8 +8,8 @@ terraform {
 }
 
 variable "aws_region" {
-  description = "Home AWS."
-  default     = "us-east-1"
+    description = "Home AWS"
+    default     = "us-east-2"
 }
 
 provider "aws" {
@@ -17,30 +17,25 @@ provider "aws" {
     shared_credentials_file = "~/.aws/credentials"
 } 
 
-#ENV Variables
-variable "aws_lambda_function" {
-  default = "Birthday_Message_Lambda"
-}
-
-output "Birthdays" {
-  value = "${aws_lambda_function.birthday_lambda.qualified_arn}"
-}
-
 variable "PATH"{
     type = string
 } 
 
 # Enviroinment variables
 variable "SLACKBOT_TOKEN" {
-  type = string
+    type = string
 }
 
 variable "GOOGLE_API_JSON" {
-  type = string
+    type = string
 }
 
 variable "GOOGLE_SHEETS_ID" {
-  type = string
+    type = string
+}
+
+variable "BUCKET_NAME"{
+    type = string
 }
 
 

@@ -20,7 +20,8 @@ SpinUp
 # Dependency directories (remove the comment below to include it)
 # vendor/
 .DS_Store 
-.secrets.json 
+*.json 
+main
 *.zip
 .env
 

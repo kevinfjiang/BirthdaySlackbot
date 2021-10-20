@@ -41,7 +41,7 @@ func (Cred *Creds) GetBDAYPeople() []*Sheets.Staff{
 	return StaffBdays
 }
 
-func (Cred *Creds) SendDailyMSG(sendprivate bool) string{
+func (Cred *Creds) SendDailyMSG(sendprivate bool) error{
 	api := SlackMSG.New_SlackAPI(Cred.SLACKBOT_TOKEN)
 	FB := Sheets.GetTable(Cred.GOOGLE_API_JSON, Cred.GOOGLE_SHEETS_ID, "B:E", api)
 	
@@ -52,5 +52,5 @@ func (Cred *Creds) SendDailyMSG(sendprivate bool) string{
 	}
 	Sheets.Prep_BDAY_MSG(PreBdays, Bdays, FB.GetIter(), api)
 
-	return "SendDailyMSG executed without interuption"
+	return nil
 }

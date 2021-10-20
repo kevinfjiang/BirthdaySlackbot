@@ -1,9 +1,7 @@
 package DB
 
 import (
-	// "fmt"
 	"log"
-	// "time"
 
 	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -17,12 +15,12 @@ type DBConnect struct {
 
 func Get_DB_Connect() DBConnect {
 	log.Print("[INFO] Creating connection to DB")
-	sess := session.Must(session.NewSession())
+	sess := session.Must(session.NewSession()) //TODO establish legit connection to DB, rn not great! Probs as an env variable
 	
 	sess.Handlers.Send.PushFront(func(r *request.Request) {
 		log.Printf("[INFO] Request: %s/%v, Params: %s",
 			r.ClientInfo.ServiceName, r.Operation, r.Params)
 	})
 
-	return DBConnect{"Table", dynamodb.New(sess)} // Double check this is valids
+	return DBConnect{"Table", dynamodb.New(sess)} 
 }
