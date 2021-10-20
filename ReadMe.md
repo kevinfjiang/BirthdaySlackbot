@@ -1,5 +1,5 @@
 
-<p align="center"><img src=".github/workflows/slack%20banner.jpg" alt="drawing" width="400"/></p>
+<p align="center"><img src=".github/slack_banner.jpg" alt="drawing" width="400"/></p>
 
 # Birthday Notify Bot
 > **Get insta notified and send gifts to your co-workers without the fee**
@@ -56,7 +56,7 @@ The purpose of the project is that it is not intended to scale because then it w
 - [x] Use terraform to set up lambda
 - [x] Automate github workflow(kinda)
 - [X] MILESTONE: MVP read and writes supported!!!
-- [X] Set up http rrequest, exposes the api end point, 
+- [X] Set up http request, exposes the api end point, 
 - [ ] Personalize/interactive special messages
 - [ ] Add logger support
 - [ ] Set up DB Reads/Writes

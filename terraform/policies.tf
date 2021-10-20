@@ -58,11 +58,3 @@ data "aws_iam_policy_document" "DB_Policy" {
 }
 
 
-# Cloudwatch
-resource "aws_lambda_permission" "allow_cloudwatch_to_daily_ping" { #TODO set up other the json to be sent
-    statement_id  = "AllowExecutionFromCloudWatch"
-    action        = "lambda:InvokeFunction"
-    function_name = "${aws_lambda_function.birthday_lambda.function_name}"
-    principal     = "events.amazonaws.com"
-    source_arn    = "${aws_cloudwatch_event_rule.every_day.arn}"
-}
