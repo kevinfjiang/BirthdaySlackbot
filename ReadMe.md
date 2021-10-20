@@ -48,21 +48,21 @@ The purpose of the project is that it is not intended to scale because then it w
 - [x] Enable connection and reading to a google sheets as a database that can be used by non-coders
 - [x] Implement fibonnaci heap for faster access and reduce search times
 - [x] Set up slack notifications with auth token and an app
-- [x] Use user email to search for slackID
-- [x] Enable private messaging and pre-birthday private messages
+- [ ] Enable private messaging and pre-birthday private messages
 - [x] Set up public messaging and the creatioon of a "Birthday" channel
-- [x] Enable the @ feature to @ the special bday people, and also if the credentials are wrong, use a filler name 
 - [x] Set up template for the slackbot (auth token and permissions) 
 - [X] Enable Google sheets writes
 - [x] Use terraform to set up DB
 - [x] Use terraform to set up lambda
 - [x] Automate github workflow(kinda)
 - [X] MILESTONE: MVP read and writes supported!!!
-- [X] Add logger support
-- [X] Set up DB Reads/Writes
+- [X] Set up http rrequest, exposes the api end point, 
+- [ ] Personalize/interactive special messages
+- [ ] Add logger support
+- [ ] Set up DB Reads/Writes
 - [ ] Write some unittests 
 - [ ] Set up github workflows 
-- [ ] Set up interactive slack messages
+- [ ] set up CI/CD with an s3 bucket
 - [X] Set up DynamoDB for interactive messages
 - [ ] "interactive" demo for recruiters ig
 </details>

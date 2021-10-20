@@ -6,7 +6,7 @@ resource "aws_apigatewayv2_api" "lambda" {
 resource "aws_apigatewayv2_stage" "lambda" {
   api_id = aws_apigatewayv2_api.lambda.id
 
-  name        = "serverless_lambda_stage"
+  name        = "birthday_serverless"
   auto_deploy = true
 
   access_log_settings {
@@ -30,10 +30,13 @@ resource "aws_apigatewayv2_stage" "lambda" {
 
 resource "aws_apigatewayv2_integration" "birthday_lambda" {
   api_id = aws_apigatewayv2_api.lambda.id
+  integration_type = "AWS_PROXY"
 
-  integration_uri    = aws_lambda_function.birthday_lambda.invoke_arn
-  integration_type   = "AWS_PROXY"
-  integration_method = "POST"
+  connection_type           = "INTERNET"
+  description               = "Lambda example"
+  integration_method        = "POST"
+  integration_uri           = aws_lambda_function.birthday_lambda.invoke_arn
+  passthrough_behavior      = "WHEN_NO_MATCH"
 }
 
 resource "aws_apigatewayv2_route" "birthday_lambda" {
@@ -49,11 +52,3 @@ resource "aws_cloudwatch_log_group" "api_gw" {
   retention_in_days = 30
 }
 
-resource "aws_lambda_permission" "api_gw" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.birthday_lambda.function_name
-  principal     = "apigateway.amazonaws.com"
-
-  source_arn = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
-}
