@@ -1,5 +1,5 @@
 
-<p align="center"><img src=".github/slack_banner.jpg" alt="drawing" width="400"/></p>
+<p align="center"><img src="https://github.com/kevinfjiang/BirthdaySlackbot/blob/master/.github/slack_banner.jpg" alt="drawing" width="400"/></p>
 
 # Birthday Notify Bot
 > **Get insta notified and send gifts to your co-workers without the fee**
